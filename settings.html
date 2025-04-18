@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>إعدادات الاتصال</title>
+</head>
+<body>
+    <h2>إعدادات الاتصال بقاعدة البيانات</h2>
+    <form method="post">
+        <label>اسم السيرفر:</label><br>
+        <input type="text" name="server" value="{{ config.server }}" required><br><br>
+
+        <label>اسم قاعدة البيانات:</label><br>
+        <input type="text" name="database" value="{{ config.database }}" required><br><br>
+
+        <button type="submit">حفظ</button>
+    </form>
+</body>
+</html>

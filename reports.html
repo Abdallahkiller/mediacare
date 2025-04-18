@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Mediacare Reports</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            direction: rtl;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #1a73e8;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background-color: #0f5ec2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Boda For programing solution</h1>
+    <form method="GET" action="/report">
+        <label>من تاريخ:</label>
+        <input type="date" name="from_date" value="{{ from_date or '' }}">
+    
+        <label>إلى تاريخ:</label>
+        <input type="date" name="to_date" value="{{ to_date or '' }}">
+    
+        <label>نوع الفاتورة:</label>
+        <select name="invoice_type">
+            <option value="">الكل</option>
+            <option value="كاش" {% if invoice_type == 'كاش' %}selected{% endif %}>كاش</option>
+            <option value="أجل" {% if invoice_type == 'أجل' %}selected{% endif %}>أجل</option>
+            <option value="مرتجع" {% if invoice_type == 'مرتجع' %}selected{% endif %}>مرتجع</option>
+        </select>
+    
+        <button type="submit">فلترة</button>
+    </form>
+    
+    <div class="section">
+        <p><strong>مبيعات كاش:</strong> {{ cash_sales }}</p>
+        <p><strong>مبيعات آجل:</strong> {{ credit_sales }}</p>
+        <p><strong>المرتجعات:</strong> {{ return_sales }}</p>
+        <p><strong>إجمالي المبيعات:</strong> {{ net_sales }}</p>
+    </div>
+
+    <div class="section">
+        <h3>تقرير يومية المبيعات:</h3>
+        <ul>
+            {% for row in daily_sales %}
+                <li>{{ row[0] }} - {{ row[1] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3>المنتجات الأعلى مبيعًا:</h3>
+        <ul>
+            {% for row in top_products %}
+                <li>{{ row[0] }} - {{ row[1] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="button-container">
+        <button class="btn" onclick="window.print()">طباعة التقرير</button>
+        <a href="/settings" class="btn">إعدادات الاتصال</a>
+        <a href="/logout" class="btn">تسجيل الخروج</a>
+    </div>
+
+</body>
+</html>
